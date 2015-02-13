@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#The structure of this file was taken from the baxter_stocking_stuffer project by students in Northwestern's MSR program - Josh Marino, Sabeen Admani, Andrew Turchina and Chu-Chu Igbokwe
+# Message published - opencv/center_of_object - contains x,y,z coordinates as a Point message
 
 import rospy
 import numpy as np
@@ -11,15 +13,6 @@ from geometry_msgs.msg import Point
 
 from cv_bridge import CvBridge, CvBridgeError
 
-
-# #Initialize HSV thresholding values
-# low_h = None
-# high_h = None
-# low_s = None
-# high_s = None
-# low_v = None
-# high_v = None
-
 #green
 low_h  = 60
 high_h = 90
@@ -31,69 +24,8 @@ high_v = 255
 #Create publisher to publish center of object detected
 pub = rospy.Publisher('opencv/center_of_object', Point)
 
-
-# #Initialize flags to false
-# first_flag = False
-
-# #Selects HSV thresholding values based on color to look for
-# def color_selection_hsv(message):
-
-# 	global low_h,high_h,low_s,high_s,low_v,high_v
-
-# 	if message.data == "red":
-# 		low_h  = 0
-# 		high_h = 4
-# 		low_s  = 135
-# 		high_s = 245
-# 		low_v  = 60
-# 		high_v = 255
-
-# 	elif message.data == "green":
-# 		low_h  = 60
-# 		high_h = 90
-# 		low_s  = 85
-# 		high_s = 175
-# 		low_v  = 0
-# 		high_v = 255
-
-# 	elif message.data == "blue":
-# 		low_h  = 105
-# 		high_h = 115
-# 		low_s  = 135
-# 		high_s = 160
-# 		low_v  = 20
-# 		high_v = 60
-
-# 	elif message.data == "yellow":
-# 		low_h  = 15
-# 		high_h = 70
-# 		low_s  = 95
-# 		high_s = 255
-# 		low_v  = 68
-# 		high_v = 255
-
-# 	elif message.data == "orange":
-# 		low_h  = 6
-# 		high_h = 35
-# 		low_s  = 131
-# 		high_s = 255
-# 		low_v  = 0
-# 		high_v = 255
-
-
-# 	global first_flag
-# 	first_flag = True
-
-
-
-
 #Thresholds image and stores position of object in (x,y) coordinates of the camera's frame, with origin at center.
 def callback(message):
-
-
-	# #Wait for thresholding color to be updated/stored
-	# while not first_flag:
-	# 	pass
 
 	#Capturing image of web camera
 	bridge = CvBridge()
@@ -117,9 +49,9 @@ def callback(message):
 	thresholded = cv2.erode(thresholded, np.ones((2,2), np.uint8), iterations=1)
 
 
-	#Finding center of red ball
-	ret,thresh = cv2.threshold(thresholded,157,255,0)
-	contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+	##Finding center of red ball
+	#ret,thresh = cv2.threshold(thresholded,157,255,0)
+	#contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
 
 	M = cv2.moments(thresh)
 	
@@ -141,8 +73,6 @@ def callback(message):
 	cv2.imshow("Thresholded", thresholded)
 	cv2.waitKey(3)
 
-
-
 #Subscribes to left hand camera image feed
 def main():
 
@@ -156,8 +86,6 @@ def main():
 
 	#Subscribe to left hand camera image 
 	rospy.Subscriber("/cameras/left_hand_camera/image", Image, callback)
-	#rospy.Subscriber("/color_identifier", String, color_selection_hsv)
-
 
 	#Keep from exiting until this node is stopped
 	rospy.spin()
