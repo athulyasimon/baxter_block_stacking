@@ -50,8 +50,8 @@ def callback(message):
 
 
 	##Finding center of red ball
-	#ret,thresh = cv2.threshold(thresholded,157,255,0)
-	#contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+	ret,thresh = cv2.threshold(thresholded,157,255,0)
+	contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
 
 	M = cv2.moments(thresh)
 	
