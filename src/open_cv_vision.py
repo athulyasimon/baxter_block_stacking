@@ -18,8 +18,17 @@ low_h  = 60
 high_h = 90
 low_s  = 85
 high_s = 175
-low_v  = 0
+low_v  = 70
 high_v = 255
+
+#blue
+#low_h  = 105
+#high_h = 115
+#low_s  = 135
+#high_s = 160
+#low_v  = 20
+#high_v = 60
+
 
 #Create publisher to publish center of object detected
 pub = rospy.Publisher('opencv/center_of_object', Point)
@@ -49,7 +58,7 @@ def callback(message):
 	thresholded = cv2.erode(thresholded, np.ones((2,2), np.uint8), iterations=1)
 
 
-	##Finding center of red ball
+	##Finding center of object
 	ret,thresh = cv2.threshold(thresholded,157,255,0)
 	contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
 
@@ -63,8 +72,12 @@ def callback(message):
 		cy = int(M['m01']/M['m00'])
 
 		P = Point()
-		P.x = cx-(width)/2
-		P.y = -(cy - (height/2))
+		# .0025 is pixel size at 1 meter
+		# .266 is the vertical distance from camera to object
+		# .7 and .4 is the position of the gripper in baxter's coordinates
+		# .05 and -.02 is camera offset from gripper
+		P.x = (cx - (width)/2)*.0025*.3 + .7  + .05 #+.1
+		P.y = (cy - (height)/2)*.0025*.3 + .4 - .02 #- .1
 		pub.publish(P)
 
 
