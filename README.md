@@ -10,6 +10,10 @@ Terminal window 1
 * sudo service network-manager stop
 * sudo avahi-autoipd eth0
 
+For terminal Window 2 and onwards please do these steps first
+*cd baxter_ws/ (new tabs created after this step should already be in the correct folder)
+*./baxter.sh
+
 Terminal window 2
 * rosrun baxter_tools enable_robot.py -e
 * rosrun baxter_interface joint_trajectory_action_server.py
@@ -20,9 +24,9 @@ Terminal window 3
 Wait for the green phrase All is Happy, you can start planning now!
 
 Terminal window 4
-* rosrun move_arm_vision.py
-* rosrun open_cv_vision.py
+* rosrun baxter_block_stack move_arm_vision.py
+* rosrun baxter_block_stack open_cv_vision.py
 
 Terminal window 5
-* rosrun move_arm_pick.py
-* rosrun move_arm_place.py
+* rosrun baxter_block_stack move_arm_pick.py
+* rosrun baxter_block_stack move_arm_place.py
