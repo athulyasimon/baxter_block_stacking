@@ -11,8 +11,8 @@ Terminal window 1
 * sudo avahi-autoipd eth0
 
 For terminal Window 2 and onwards please do these steps first
-*cd baxter_ws/ (new tabs created after this step should already be in the correct folder)
-*./baxter.sh
+* cd baxter_ws/ (new tabs created after this step should already be in the correct folder)
+* ./baxter.sh
 
 Terminal window 2
 * rosrun baxter_tools enable_robot.py -e
