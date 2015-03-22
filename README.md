@@ -72,7 +72,9 @@ If the error “Couldn’t find an AF_INET address for …” comes up, try turn
 
 ######General MoveIt! Tips:
 
-MoveIt! is a very intertwined package, and in order to make everything work there are a few things that must also be running. The easiest method that I found, which includes everything that you need, was to rosrun baxter_interface joint_trajectory_action_server.py along with roslaunch baxter_moveit_config demo_baxter.launch. Wait for the green phrase “All is Happy, Everything is Set Up, You can start planning now” before using Rviz or running any other files. 
+MoveIt! is a very intertwined package, and in order to make everything work there are a few things that must also be running. The easiest method that I found, which includes everything that you need, was to run the following two files together:
+* `rosrun baxter_interface joint_trajectory_action_server.py`
+* `roslaunch baxter_moveit_config demo_baxter.launch` Wait for the green phrase “All is Happy, Everything is Set Up, You can start planning now” before using Rviz or running any other files. 
 
 
 ####Instruction for running files (will eventually be turned into a launch file):
