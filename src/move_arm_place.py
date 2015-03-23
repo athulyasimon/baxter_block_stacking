@@ -88,28 +88,9 @@ def move_group_python_interface_tutorial():
                                       moveit_msgs.msg.DisplayTrajectory)
 
   ## Wait for RVIZ to initialize. This sleep is ONLY to allow Rviz to come up.
-  print "============ Waiting for RVIZ..."
-  rospy.sleep(5)
+  #print "============ Waiting for RVIZ..."
+  #rospy.sleep(5)
   # print "============ Starting tutorial "
-
-  # ## Getting Basic Information
-  # ## ^^^^^^^^^^^^^^^^^^^^^^^^^
-  # ##
-  # ## We can get the name of the reference frame for this robot
-  # print "============ Reference frame: %s" % group.get_planning_frame()
-
-  # ## We can also print the name of the end-effector link for this group
-  # print "============ Reference frame: %s" % group.get_end_effector_link()
-
-  # ## We can get a list of all the groups in the robot
-  # print "============ Robot Groups:"
-  # print robot.get_group_names()
-
-  # ## Sometimes for debugging it is useful to print the entire state of the
-  # ## robot.
-  # print "============ Printing robot state"
-  # print robot.get_current_state()
-  # print "============"
 
 
   ## Planning to a Pose goal
@@ -119,15 +100,15 @@ def move_group_python_interface_tutorial():
   print "============ Generating waypoint plan"
   pose_target = geometry_msgs.msg.Pose()
   pose_target.orientation.x = 1
-  pose_target.orientation.y = 0
-  pose_target.orientation.z = 0
-  pose_target.orientation.w = 0
+#  pose_target.orientation.y = 0
+#  pose_target.orientation.z = 0
+#  pose_target.orientation.w = 0
   pose_target.position.x = 0.7
   pose_target.position.y = 0.4
   pose_target.position.z = 0.3
   group.set_pose_target(pose_target)
   plan1 = group.plan()
-  rospy.sleep(5)
+  rospy.sleep(2)
   group.go(wait=True)
 
   print "============ Generating block placement plan"
@@ -136,8 +117,9 @@ def move_group_python_interface_tutorial():
   pose_target.orientation.z = 0
   pose_target.orientation.w = 0
   pose_target.position.x = 0.83
-  pose_target.position.y = 0.17
-  pose_target.position.z = 0.02
+  pose_target.position.y = 0.1
+
+  pose_target.position.z = 0.07 #-0.01 for 1 block, 0.03 for 2 blocks, 0.07 for 3 blocks, there should already be a little block at the goal spot
   group.set_pose_target(pose_target)
 
   ## Now, we call the planner to compute the plan
@@ -147,7 +129,7 @@ def move_group_python_interface_tutorial():
   plan2 = group.plan()
 
   # print "============ Waiting while RVIZ displays plan1..."
-  # rospy.sleep(5)
+  rospy.sleep(2)
 
  
   ## You can ask RVIZ to visualize a plan (aka trajectory) for you.  But the
@@ -191,12 +173,27 @@ def move_group_python_interface_tutorial():
   pose_target.orientation.y = 0
   pose_target.orientation.z = 0
   pose_target.orientation.w = 0
-  pose_target.position.x = 0.7
-  pose_target.position.y = 0.4
-  pose_target.position.z = 0.3
+  pose_target.position.x = 0.85
+  pose_target.position.y = 0.1
+  pose_target.position.z = 0.1
   group.set_pose_target(pose_target)
   plan1 = group.plan()
-  rospy.sleep(5)
+  rospy.sleep(1)
+  group.go(wait=True)
+
+  #moving back to vision place
+  print "============ Generating return plan"
+  pose_target = geometry_msgs.msg.Pose()
+  pose_target.orientation.x = 1
+  pose_target.orientation.y = 0
+  pose_target.orientation.z = 0
+  pose_target.orientation.w = 0
+  pose_target.position.x = 0.7
+  pose_target.position.y = 0.5
+  pose_target.position.z = 0.27
+  group.set_pose_target(pose_target)
+  plan1 = group.plan()
+  rospy.sleep(1)
   group.go(wait=True)
 
 
