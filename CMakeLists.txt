@@ -16,6 +16,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   trajectory_msgs
+  moveit_core
+  moveit_ros_planning_interface
 )
 
 ## System dependencies are found with CMake's conventions
@@ -90,7 +92,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES baxter_block_stack
-#  CATKIN_DEPENDS actionlib baxter_core_msgs baxter_interface baxter_maintenance_msgs control_msgs cv_bridge geometry_msgs roscpp rospy sensor_msgs trajectory_msgs
+  CATKIN_DEPENDS actionlib baxter_core_msgs baxter_interface baxter_maintenance_msgs control_msgs cv_bridge geometry_msgs roscpp rospy sensor_msgs trajectory_msgs
 #  DEPENDS system_lib
 )
 
@@ -111,7 +113,8 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(baxter_block_stack_node src/baxter_block_stack_node.cpp)
+#add_executable(baxter_block_stack_node src/baxter_block_stack_node.cpp)
+add_executable(collision_object src/collision_object.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -121,6 +124,9 @@ include_directories(
 # target_link_libraries(baxter_block_stack_node
 #   ${catkin_LIBRARIES}
 # )
+ target_link_libraries(collision_object
+   ${catkin_LIBRARIES}
+ )
 
 #############
 ## Install ##
