@@ -82,8 +82,8 @@ MoveIt! is a very intertwined package, and in order to make everything work ther
 Wait for the green phrase “All is well, Everyone is Happy, You can start planning now!” before using Rviz or running any other files. 
 
 
-#### Instruction for running files (will eventually be turned into a working launch file)  <a name="Instructions"></a>
-Terminal windows 3 and onwards have been placed into a launch file, however a bug in the move_arm_pick.py file prevents a complete execution of all the steps. 
+#### Instruction for running files  <a name="Instructions"></a>
+Terminal windows 3 and onwards have been placed into a launch file, however a bug in the move_arm_pick.py file prevents a complete execution of all the steps. To run trhough the sequence of steps, please just hit Ctrl + C once Baxter's arm has picked up the block. 
 
 Terminal window 1
 * sudo service network-manager stop
