@@ -74,10 +74,10 @@ def callback(message):
 		P = Point()
 		# .0025 is pixel size at 1 meter
 		# .266 is the vertical distance from camera to object
-		# .7 and .4 is the position of the gripper in baxter's coordinates
+		# .7 and .5 is the position of the gripper in baxter's coordinates
 		# .05 and -.02 is camera offset from gripper
-		P.x = (cx - (width)/2)*.0025*.3 + .7  + .05 #+.1
-		P.y = (cy - (height)/2)*.0025*.3 + .4 - .02 #- .1
+		P.x = (cx - (width)/2)*.0025*.3 + .7  + .1 ##.05 #+.1
+		P.y = (cy - (height)/2)*.0025*.3 + .5 - .1 #.02 #- .1
 		pub.publish(P)
 
 
