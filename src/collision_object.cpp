@@ -86,9 +86,9 @@ int main(int argc, char **argv)
 // subtract the object from the world 
 // and to attach the object to the robot
   moveit_msgs::AttachedCollisionObject attached_object;
-  attached_object.link_name = "r_wrist_roll_link";
+  attached_object.link_name = "left_gripper"; //NEED TO CHECK THIS and all other instances of left_gripper
   /* The header must contain a valid TF frame*/
-  attached_object.object.header.frame_id = "r_wrist_roll_link";
+  attached_object.object.header.frame_id = "left_gripper";
   /* The id of the object */
   attached_object.object.id = "box";
 
@@ -100,9 +100,9 @@ int main(int argc, char **argv)
   shape_msgs::SolidPrimitive primitive;
   primitive.type = primitive.BOX;
   primitive.dimensions.resize(3);
-  primitive.dimensions[0] = 0.1;
-  primitive.dimensions[1] = 0.1;
-  primitive.dimensions[2] = 0.1;
+  primitive.dimensions[0] = 0.06; //dimensions of block
+  primitive.dimensions[1] = 0.06;
+  primitive.dimensions[2] = 0.06;
 
   attached_object.object.primitives.push_back(primitive);
   attached_object.object.primitive_poses.push_back(pose);
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 // the set of collision objects in the "world" part of the 
 // planning scene. Note that we are using only the "object" 
 // field of the attached_object message here.
-  ROS_INFO("Adding the object into the world at the location of the right wrist.");
+  ROS_INFO("Adding the object into the world at the location of the left wrist.");
   moveit_msgs::PlanningScene planning_scene;
   planning_scene.world.collision_objects.push_back(attached_object.object);
   planning_scene.is_diff = true;
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
   /* First, define the DETACH object message*/
   moveit_msgs::AttachedCollisionObject detach_object;
   detach_object.object.id = "box";
-  detach_object.link_name = "r_wrist_roll_link";
+  detach_object.link_name = "left_gripper";
   detach_object.object.operation = attached_object.object.REMOVE;
 
 // Note how we make sure that the diff message contains no other
