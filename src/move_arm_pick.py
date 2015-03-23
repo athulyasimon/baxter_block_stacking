@@ -54,8 +54,9 @@ from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
 
 from moveit_commander import MoveGroupCommander
 
-
 def move_group_python_interface(block_pos):
+
+  #block_pos = rospy.Subscriber("/opencv/center_of_object", Point)
   
   ## BEGIN_TUTORIAL
   ##
@@ -64,7 +65,7 @@ def move_group_python_interface(block_pos):
   ## CALL_SUB_TUTORIAL imports
   ##
   ## First initialize moveit_commander and rospy.
-  print "============ Starting tutorial setup"
+  print "============ Starting Move Arm for Block Pick Up"
   moveit_commander.roscpp_initialize(sys.argv)
   #rospy.init_node('move_group_python_interface', anonymous=True)
 
@@ -85,33 +86,12 @@ def move_group_python_interface(block_pos):
 
   ## We create this DisplayTrajectory publisher which is used below to publish
   ## trajectories for RVIZ to visualize.
-  display_trajectory_publisher = rospy.Publisher(
-                                      '/move_group/display_planned_path',
-                                      moveit_msgs.msg.DisplayTrajectory)
+  #display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory)
 
   ## Wait for RVIZ to initialize. This sleep is ONLY to allow Rviz to come up.
-  print "============ Waiting for RVIZ..."
-  rospy.sleep(5)
+  #print "============ Waiting for RVIZ..."
+  #rospy.sleep(5)
   # print "============ Starting tutorial "
-
-  # ## Getting Basic Information
-  # ## ^^^^^^^^^^^^^^^^^^^^^^^^^
-  # ##
-  # ## We can get the name of the reference frame for this robot
-  # print "============ Reference frame: %s" % group.get_planning_frame()
-
-  # ## We can also print the name of the end-effector link for this group
-  # print "============ Reference frame: %s" % group.get_end_effector_link()
-
-  # ## We can get a list of all the groups in the robot
-  # print "============ Robot Groups:"
-  # print robot.get_group_names()
-
-  # ## Sometimes for debugging it is useful to print the entire state of the
-  # ## robot.
-  # print "============ Printing robot state"
-  # print robot.get_current_state()
-  # print "============"
 
 
   ## Planning to a Pose goal
@@ -120,13 +100,13 @@ def move_group_python_interface(block_pos):
   ## end-effector
   print "============ Generating plan 1"
   pose_target = geometry_msgs.msg.Pose()
-  pose_target.orientation.x = 1 #0.69283
-  #pose_target.orientation.y = 0 #0.1977
-  #pose_target.orientation.z = 0 #-0.16912
-  #pose_target.orientation.w = .3 #0.67253
-  pose_target.position.x = block_pos.x #0.81576
-  pose_target.position.y = block_pos.y #0.093893
-  pose_target.position.z = 0 #0.2496
+  pose_target.orientation.x = 1 
+  #pose_target.orientation.y = 0 
+  #pose_target.orientation.z = 0 
+  #pose_target.orientation.w = 0 
+  pose_target.position.x = block_pos.x 
+  pose_target.position.y = block_pos.y 
+  pose_target.position.z = -0.05 #0.04 for 3 blocks, 0.0 for 2 blocks, -.05 for 1 block
   group.set_pose_target(pose_target)
   print block_pos.x
   print block_pos.y
@@ -137,19 +117,19 @@ def move_group_python_interface(block_pos):
   ## to actually move the robot
   plan1 = group.plan()
 
-  print "============ Waiting while RVIZ displays plan1..."
-  rospy.sleep(5)
+#  print "============ Waiting while RVIZ displays plan1..."
+#  rospy.sleep(5)
 
  
-  ## You can ask RVIZ to visualize a plan (aka trajectory) for you.  But the
-  ## group.plan() method does this automatically so this is not that useful
-  ## here (it just displays the same trajectory again).
-  print "============ Visualizing plan1"
-  display_trajectory = moveit_msgs.msg.DisplayTrajectory()
+#  ## You can ask RVIZ to visualize a plan (aka trajectory) for you.  But the
+#  ## group.plan() method does this automatically so this is not that useful
+#  ## here (it just displays the same trajectory again).
+#  print "============ Visualizing plan1"
+#  display_trajectory = moveit_msgs.msg.DisplayTrajectory()
 
-  display_trajectory.trajectory_start = robot.get_current_state()
-  display_trajectory.trajectory.append(plan1)
-  display_trajectory_publisher.publish(display_trajectory);
+#  display_trajectory.trajectory_start = robot.get_current_state()
+#  display_trajectory.trajectory.append(plan1)
+#  display_trajectory_publisher.publish(display_trajectory);
 
   # print "============ Waiting while plan1 is visualized (again)..."
   # rospy.sleep(5)
@@ -183,9 +163,7 @@ def move_group_python_interface(block_pos):
 #   ## Adding/Removing Objects and Attaching/Detaching Objects
 #   ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #   ## First, we will define the collision object message
-#   collision_object = moveit_msgs.msg.CollisionObject()
-
-
+  collision_object = moveit_msgs.msg.CollisionObject()
 
   ## When finished shut down moveit_commander.
   moveit_commander.roscpp_shutdown()
@@ -194,13 +172,20 @@ def move_group_python_interface(block_pos):
 
   print "============ STOPPING"
 
+
 def target_pose_listener():
   rospy.init_node('target_pose_listener',anonymous = True)
-  rospy.Subscriber("/opencv/center_of_object", Point, move_group_python_interface)
+  block_pos = rospy.Subscriber("/opencv/center_of_object", Point, move_group_python_interface)
   rospy.spin()
 
 if __name__=='__main__':
   try:
-    target_pose_listener()
+   count = 1
+   if count == 1:
+     target_pose_listener()
+   else:
+     pass
+   #move_group_python_interface() 
+
   except rospy.ROSInterruptException:
     pass
