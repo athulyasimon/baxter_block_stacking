@@ -89,7 +89,7 @@ def move_group_python_interface():
 
   ## Wait for RVIZ to initialize. This sleep is ONLY to allow Rviz to come up.
   print "============ Waiting for RVIZ..."
-  rospy.sleep(5)
+  rospy.sleep(15)
   # print "============ Starting tutorial "
 
   ## Planning to a Pose goal
@@ -111,6 +111,7 @@ def move_group_python_interface():
   ## and visualize it if successful
   ## Note that we are just planning, not asking move_group 
   ## to actually move the robot
+  rospy.sleep(15)
   plan1 = group.plan()
 
   #print "============ Waiting while RVIZ displays plan1..."
