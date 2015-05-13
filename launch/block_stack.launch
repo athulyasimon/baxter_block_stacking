@@ -15,6 +15,6 @@
 
 	<!--Node that moves arm to place block down 
 	<node pkg="baxter_block_stack" type="move_arm_place.py" name="arm_place_node" output="screen" >
-	</node> -->
+	</node> 
 
 </launch>
