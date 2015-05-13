@@ -28,7 +28,7 @@ def main():
 
 	rospy.init_node('image_pusher')
 
-	first_image = "/home/athulya/Desktop/block_stacking.png"
+	first_image = "/home/athulya/baxter_ws/src/baxter_block_stacking/src/block_stacking.png"
 
 	send_image(first_image)
 
