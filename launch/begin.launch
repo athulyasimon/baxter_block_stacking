@@ -1,0 +1,14 @@
+<launch>
+	<!--Node for trajectories, used with MoveIt -->
+	<node pkg="baxter_interface" type="joint_trajectory_action_server.py" name="trajectory_node" output="log" >
+	</node>
+
+	<include file="$(find baxter_moveit_config)/launch/demo_baxter.launch"/>
+
+	<!--Node that moves arm camera to position to detect block -->
+	<node pkg="baxter_block_stack" type="move_arm_vision.py"
+name="arm_vision_node" output ="log">
+	</node>
+
+
+</launch>
