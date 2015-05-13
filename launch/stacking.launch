@@ -1,0 +1,10 @@
+<launch>
+	<!--Node that uses camera to find block -->
+	<node pkg="baxter_block_stack" type="open_cv_vision.py" name="camera_node" output="log" >
+	</node>
+	<!--Node that uses camera to find block -->
+	<node pkg="baxter_block_stack" type="proper.py" name="stack_node" output="screen" >
+	</node>
+
+
+</launch>
