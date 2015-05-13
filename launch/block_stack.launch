@@ -1,20 +1,21 @@
 <launch>
+	<!--Node for trajectories, used with MoveIt -->
+	<node pkg="baxter_interface" type="joint_trajectory_action_server.py" name="trajectory_node" output="log" >
+	</node>
+
 	<include file="$(find baxter_moveit_config)/launch/demo_baxter.launch"/>
 
 	<!--Node that moves arm camera to position to detect block -->
-	<node pkg="baxter_block_stack" type="move_arm_vision.py" name="arm_vision_node" output="screen" >
+	<node pkg="baxter_block_stack" type="move_arm_vision.py"
+name="arm_vision_node" output ="log">
 	</node>
 
 	<!--Node that uses camera to find block -->
 	<node pkg="baxter_block_stack" type="open_cv_vision.py" name="camera_node" output="log" >
 	</node>
-
-	<!--Node that moves arm to pick up block -->
-	<node pkg="baxter_block_stack" type="move_arm_pick.py" name="arm_pick_node" output="screen" >
+	<!--Node that uses camera to find block -->
+	<node pkg="baxter_block_stack" type="proper.py" name="stack_node" output="screen" >
 	</node>
 
-	<!--Node that moves arm to place block down 
-	<node pkg="baxter_block_stack" type="move_arm_place.py" name="arm_place_node" output="screen" >
-	</node> 
 
 </launch>
