@@ -31,7 +31,7 @@ high_v = 255
 
 
 #Create publisher to publish center of object detected
-pub = rospy.Publisher('opencv/center_of_object', Point)
+pub = rospy.Publisher('opencv/center_of_object', Point, queue_size = 1)
 
 #Thresholds image and stores position of object in (x,y) coordinates of the camera's frame, with origin at center.
 def callback(message):
@@ -40,7 +40,8 @@ def callback(message):
 	bridge = CvBridge()
 
 	cv_image = bridge.imgmsg_to_cv2(message, "bgr8")
-	height, width, depth = cv_image.shape	
+	height, width, depth = cv_image.shape
+	#print height, width, depth	
 
 
 	#Converting image to HSV format
@@ -76,8 +77,11 @@ def callback(message):
 		# .266 is the vertical distance from camera to object
 		# .7 and .5 is the position of the gripper in baxter's coordinates
 		# .05 and -.02 is camera offset from gripper
-		P.x = (cx - (width)/2)*.0025*.3 + .7  + .1 ##.05 #+.1
-		P.y = (cy - (height)/2)*.0025*.3 + .5 - .1 #.02 #- .1
+		#P.x = (cx -(width)/2)*.0025*.3 + .7 + .05 #+.1
+		#P.y = (cy - (height)/2)*.0025*.3 + .5 - .02 #- .1
+		P.x = (cx - (width/2))*.0025*.3 + .7 + .05 #- .1
+		P.y = (cy - (height/2))*.0025*.3 + .5  - .02 #+.1
+
 		pub.publish(P)
 
 
