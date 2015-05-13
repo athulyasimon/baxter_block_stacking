@@ -82,30 +82,24 @@ MoveIt! is a very intertwined package, and in order to make everything work ther
 Wait for the green phrase “All is well, Everyone is Happy, You can start planning now!” before using Rviz or running any other files. 
 
 
-#### Instruction for running files  <a name="Instructions"></a>
-Terminal windows 3 and onwards have been placed into a launch file, however a bug in the move_arm_pick.py file prevents a complete execution of all the steps. To run trhough the sequence of steps, please just hit Ctrl + C once Baxter's arm has picked up the block. 
+#### Instructions for running files  <a name="Instructions"></a>
 
 Terminal window 1
 * sudo service network-manager stop
 * sudo avahi-autoipd eth0
 
-For terminal Window 2 and onwards please do these steps first
+For terminal Windows 2 and 3 please do these steps first
 * cd baxter_ws/ (new tabs created after this step should already be in the correct folder)
 * ./baxter.sh
 
 Terminal window 2
 * rosrun baxter_tools enable_robot.py -e
-* rosrun baxter_interface joint_trajectory_action_server.py
-
-Terminal window 3
-* roslaunch baxter_moveit_config demo_baxter.launch
+* roslaunch baxter_block_stack begin.launch
 
 Wait for the green phrase "All is well, Everyone is Happy, You can start planning now!"
 
-Terminal window 4
-* rosrun baxter_block_stack move_arm_vision.py
-* rosrun baxter_block_stack open_cv_vision.py
+Terminal window 3
+* Position blocks in starting position
+* roslaunch baxter_block_stack stacking.launch
 
-Terminal window 5
-* rosrun baxter_block_stack move_arm_pick.py
-* rosrun baxter_block_stack move_arm_place.py
+Move the blocks back to the starting position and press the circular cuff button to repeat the stacking
